@@ -2,11 +2,12 @@
 //  RegisterViewController.swift
 //  Flash Chat iOS13
 //
-//  Created by Angela Yu on 21/10/2019.
-//  Copyright © 2019 Angela Yu. All rights reserved.
+//  Created by Haoran Yu on 8/26/20.
+//  Copyright © 2020 Haoran Yu. All rights reserved.
 //
 
 import UIKit
+import Firebase
 
 class RegisterViewController: UIViewController {
 
@@ -14,6 +15,17 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var passwordTextfield: UITextField!
     
     @IBAction func registerPressed(_ sender: UIButton) {
+        
+        if let email = emailTextfield.text, let password = passwordTextfield.text {
+            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                if let e = error {
+                    print(e)
+                } else {
+                    //Navigate to the ChatViewController
+                    self.performSegue(withIdentifier: K.registerSegue, sender: self)
+                }
+            }
+        }
     }
     
 }
